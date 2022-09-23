@@ -5,6 +5,7 @@ describe city;
 describe country;
 describe countrylanguage;
 select * from country;
+select * from countrylanguage;
 # 1 Using COUNT, get the number of cities in the USA.
 select count(name) from city where CountryCode = "USA";
 
@@ -36,6 +37,23 @@ select count(name) from country;
 select name,surfaceArea from country where surfaceArea is not null order by surfaceArea desc limit 10;
 
 #11.	List the five largest cities by population in Japan.
-select city.name, city.Population from city join country on city.countrycode=country.code where country.Name="japan";
+select city.name, city.Population from city join country on city.countrycode=country.code where country.Name="japan" limit 5;
 
 #12.	List the names and country codes of every country with Elizabeth II as its Head of State. You will need to fix the mistake first!
+select  country.code,HeadOfState from country where country.HeadOfState="Elisabeth II";
+
+#13.	List the top ten countries with the smallest population-to-area ratio. Discard any countries with a ratio of 0.
+select population,Name,SurfaceArea from country where (Population/SurfaceArea) is not null and population>0 order by (population/SurfaceArea) desc limit 10;
+
+# 14.	List every unique world language.
+select count(distinct Language) from countrylanguage;
+
+#15.	List the names and GNP of the world's top 10 richest countries.
+select GNP,name from country where GNP is not null and GNP>country.name order by GNP>country.name desc limit 10;
+
+#16.	List the names of, and number of languages spoken by, the top ten most multilingual countries.
+
+#17.	List every country where over 50% of its population can speak German.
+select country.name, countrylanguage.percentage from countrylanguage join country on countrylanguage.countrycode=country.code where (countrylanguage.percentage>50) and countrylanguage.language="german" order by countrylanguage.percentage desc;
+
+
